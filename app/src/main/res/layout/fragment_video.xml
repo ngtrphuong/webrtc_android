@@ -64,7 +64,7 @@
                     android:id="@+id/descTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="等待对方接受邀请..."
+                    android:text="Waiting for the other party to accept the invitation..."
                     android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>
@@ -77,7 +77,7 @@
             android:src="@drawable/av_minimize"
             android:visibility="gone" />
 
-        <!--拨出控制-->
+        <!--Dial out control-->
         <include
             android:id="@+id/outgoingActionContainer"
             layout="@layout/av_p2p_video_outgoing_action"
@@ -87,7 +87,7 @@
             android:layout_centerHorizontal="true"
             android:visibility="visible" />
 
-        <!--来电控制-->
+        <!--Incoming call control-->
         <include
             android:id="@+id/incomingActionContainer"
             layout="@layout/av_p2p_video_incoming_action"
@@ -96,7 +96,7 @@
             android:layout_alignParentBottom="true"
             android:visibility="gone" />
 
-        <!--接通控制-->
+        <!--On control-->
         <include
             android:id="@+id/connectedActionContainer"
             layout="@layout/av_p2p_video_connected_action"

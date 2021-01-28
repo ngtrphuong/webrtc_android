@@ -8,10 +8,10 @@ import java.util.List;
  */
 public interface ISkyEvent {
 
-    // 创建房间
+    // Create room
     void createRoom(String room, int roomSize);
 
-    // 发送单人邀请
+    // Send a single invitation
     void sendInvite(String room, List<String> userIds, boolean audioOnly);
 
     void sendRefuse(String room, String inviteId, int refuseType);

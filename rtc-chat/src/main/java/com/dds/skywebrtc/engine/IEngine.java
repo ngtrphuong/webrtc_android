@@ -6,34 +6,34 @@ import android.view.View;
 import java.util.List;
 
 /**
- * rtc基类
+ * rtc base class
  */
 public interface IEngine {
 
     /**
-     * 初始化
+     * Initialization
      */
     void init(EngineCallback callback);
 
     /**
-     * 加入房間
+     * Join room
      */
     void joinRoom(List<String> userIds);
 
     /**
-     * 有人进入房间
+     * Someone enters the room
      */
     void userIn(String userId);
 
     /**
-     * 用户拒绝
+     * User rejected
      * @param userId userId
      * @param type type
      */
     void userReject(String userId,int type);
 
     /**
-     * 用户网络断开
+     * User network disconnect
      * @param userId userId
      */
     void disconnected(String userId);
@@ -54,59 +54,59 @@ public interface IEngine {
     void receiveIceCandidate(String userId, String id, int label, String candidate);
 
     /**
-     * 离开房间
+     * Leave the room
      *
      * @param userId userId
      */
     void leaveRoom(String userId);
 
     /**
-     * 开启本地预览
+     * Open local preview
      */
     View startPreview(boolean isOverlay);
 
     /**
-     * 关闭本地预览
+     * Close local preview
      */
     void stopPreview();
 
     /**
-     * 开始远端推流
+     * Start remote streaming
      */
     void startStream();
 
     /**
-     * 停止远端推流
+     * Stop remote streaming
      */
     void stopStream();
 
     /**
-     * 开始远端预览
+     * Start remote preview
      */
     View setupRemoteVideo(String userId, boolean isO);
 
     /**
-     * 关闭远端预览
+     * Turn off remote preview
      */
     void stopRemoteVideo();
 
     /**
-     * 切换摄像头
+     * Switch camera
      */
     void switchCamera();
 
     /**
-     * 设置静音
+     * Set mute
      */
     boolean muteAudio(boolean enable);
 
     /**
-     * 开启扬声器
+     * Turn on the speaker
      */
     boolean toggleSpeaker(boolean enable);
 
     /**
-     * 释放所有内容
+     * Release everything
      */
     void release();
 

@@ -32,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="挂断"
+                android:text="@string/hang_up"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="接听"
+                android:text="@string/answer"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

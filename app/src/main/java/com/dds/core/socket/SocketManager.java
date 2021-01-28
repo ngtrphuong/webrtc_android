@@ -57,7 +57,7 @@ public class SocketManager implements IEvent {
                 return;
             }
             webSocket = new MyWebSocket(uri, this);
-            // 设置wss
+            // Set wss
             if (url.startsWith("wss")) {
                 try {
                     SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -77,7 +77,7 @@ public class SocketManager implements IEvent {
                     e.printStackTrace();
                 }
             }
-            // 开始connect
+            // Start connect
             webSocket.connect();
         }
 
@@ -199,7 +199,7 @@ public class SocketManager implements IEvent {
         intent.putExtra("userList", userList);
         intent.setAction(Utils.ACTION_VOIP_RECEIVER);
         intent.setComponent(new ComponentName(App.getInstance().getPackageName(), VoipReceiver.class.getName()));
-        // 发送广播
+        // Send broadcast
         App.getInstance().sendBroadcast(intent);
 
     }
@@ -227,10 +227,10 @@ public class SocketManager implements IEvent {
 
     }
 
-    @Override  // 加入房间
+    @Override  // Join room
     public void onPeers(String myId, String connections, int roomSize) {
         handler.post(() -> {
-            //自己进入了房间，然后开始发送offer
+            //I entered the room and started sending offers
             CallSession currentSession = SkyEngineKit.Instance().getCurrentSession();
             if (currentSession != null) {
                 currentSession.onJoinHome(myId, connections, roomSize);

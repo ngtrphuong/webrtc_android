@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.dds.core.consts.Urls;
 import com.dds.net.HttpRequestPresenter;
 import com.dds.net.ICallback;
@@ -34,14 +35,15 @@ public class RoomViewModel extends ViewModel {
             HttpRequestPresenter.getInstance().get(url, null, new ICallback() {
                 @Override
                 public void onSuccess(String result) {
-                    Log.d("dds_test", result);
+                    Log.d("loadRooms - onSuccess()", result);
                     List<RoomInfo> roomInfos = JSON.parseArray(result, RoomInfo.class);
+                    Log.d("loadRooms - roomInfo", roomInfos.toString());
                     mList.postValue(roomInfos);
                 }
 
                 @Override
                 public void onFailure(int code, Throwable t) {
-                    Log.d("dds_test", "code:" + code + ",msg:" + t.toString());
+                    Log.d("loadRooms - onFailure()", "code:" + code + ",msg:" + t.toString());
                 }
             });
         });

@@ -15,7 +15,7 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         ndk {
-            // 设置支持的SO库架构
+            // Set the supported SO library architecture
             abiFilters 'armeabi-v7a', 'x86'//, 'arm64-v8a'
         }
     }
@@ -38,24 +38,24 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     // navigation
-    implementation 'androidx.navigation:navigation-fragment:2.3.0'
-    implementation 'androidx.navigation:navigation-ui:2.3.0'
+    implementation 'androidx.navigation:navigation-fragment:2.3.3'
+    implementation 'androidx.navigation:navigation-ui:2.3.3'
 
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    // 内存泄漏检测
+    // Memory leak detection
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     implementation project(path: ':rtc-chat')
     // java
     implementation 'org.java-websocket:Java-WebSocket:1.4.0'
     implementation 'com.alibaba:fastjson:1.2.23'
-    //强大的弹窗库
+    //Powerful pop-up window library
     implementation 'com.lxj:xpopup:2.2.0'
 
 }

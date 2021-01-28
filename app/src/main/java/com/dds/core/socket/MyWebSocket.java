@@ -76,43 +76,43 @@ public class MyWebSocket extends WebSocketClient {
     }
 
     /**
-     * ---------------------------------------处理接收消息-------------------------------------
+     * ---------------------------------------Processing received messages-------------------------------------
      */
     private void handleMessage(String message) {
         Map map = JSON.parseObject(message, Map.class);
         String eventName = (String) map.get("eventName");
         if (eventName == null) return;
-        // 登录成功
+        // Login successful
         if (eventName.equals("__login_success")) {
             handleLogin(map);
             return;
         }
-        // 被邀请
+        // Be invited
         if (eventName.equals("__invite")) {
             handleInvite(map);
             return;
         }
-        // 取消拨出
+        // Cancel outgoing
         if (eventName.equals("__cancel")) {
             handleCancel(map);
             return;
         }
-        // 响铃
+        // Ring the bell
         if (eventName.equals("__ring")) {
             handleRing(map);
             return;
         }
-        // 进入房间
+        // Enter the room
         if (eventName.equals("__peers")) {
             handlePeers(map);
             return;
         }
-        // 新人入房间
+        // Newcomer entering the room
         if (eventName.equals("__new_peer")) {
             handleNewPeer(map);
             return;
         }
-        // 拒绝接听
+        // Refuse to answer
         if (eventName.equals("__reject")) {
             handleReject(map);
             return;
@@ -131,15 +131,15 @@ public class MyWebSocket extends WebSocketClient {
         if (eventName.equals("__ice_candidate")) {
             handleIceCandidate(map);
         }
-        // 离开房间
+        // Leave the room
         if (eventName.equals("__leave")) {
             handleLeave(map);
         }
-        // 切换到语音
+        // Switch to voice
         if (eventName.equals("__audio")) {
             handleTransAudio(map);
         }
-        // 意外断开
+        // Accidentally disconnected
         if (eventName.equals("__disconnect")) {
             handleDisConnect(map);
         }
@@ -267,7 +267,7 @@ public class MyWebSocket extends WebSocketClient {
     }
 
     /**
-     * ------------------------------发送消息----------------------------------------
+     * ------------------------------Send messages----------------------------------------
      */
     public void createRoom(String room, int roomSize, String myId) {
         Map<String, Object> map = new HashMap<>();
@@ -285,7 +285,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    // 发送邀请
+    // Send Invitation
     public void sendInvite(String room, String myId, List<String> users, boolean audioOnly) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__invite");
@@ -305,7 +305,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    // 取消邀请
+    // Cancel invitation
     public void sendCancel(String mRoomId, String useId, List<String> users) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__cancel");
@@ -325,7 +325,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    // 发送响铃通知
+    // Send ring notification
     public void sendRing(String myId, String toId, String room) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__ring");
@@ -343,7 +343,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    //加入房间
+    //Join room
     public void sendJoin(String room, String myId) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__join");
@@ -360,7 +360,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    // 拒接接听
+    // Refuse to answer
     public void sendRefuse(String room, String inviteID, String myId, int refuseType) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__reject");
@@ -378,7 +378,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    // 离开房间
+    // Leave the room
     public void sendLeave(String myId, String room, String userId) {
         Map<String, Object> map = new HashMap<>();
         map.put("eventName", "__leave");
@@ -448,7 +448,7 @@ public class MyWebSocket extends WebSocketClient {
         }
     }
 
-    // 切换到语音
+    // Switch to voice
     public void sendTransAudio(String myId, String userId) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> childMap = new HashMap<>();
@@ -462,7 +462,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    // 断开重连
+    // Disconnect and reconnect
     public void sendDisconnect(String room, String myId, String userId) {
         Map<String, Object> map = new HashMap<>();
         Map<String, Object> childMap = new HashMap<>();
@@ -477,7 +477,7 @@ public class MyWebSocket extends WebSocketClient {
         send(jsonString);
     }
 
-    // 忽略证书
+    // Ignore the certificate
     public static class TrustManagerTest implements X509TrustManager {
 
         @SuppressLint("TrustAllX509TrustManager")

@@ -6,20 +6,21 @@ package com.dds.core.consts;
  */
 public class Urls {
 
-    //    private final static String IP = "192.168.2.111";
-    public final static String IP = "42.192.40.58:5000";
+    //private final static String IP = "10.128.197.95:5000";
+    private final static String IP = "10.128.197.95:3000";
+    //public final static String IP = "42.192.40.58:5000";
 
     private final static String HOST = "http://" + IP + "/";
 
-    // 信令地址
+    // Signaling address
     public final static String WS = "ws://" + IP + "/ws";
 
-    // 获取用户列表
+    // Get user list
     public static String getUserList() {
         return HOST + "userList";
     }
 
-    // 获取房间列表
+    // Get room list
     public static String getRoomList() {
         return HOST + "roomList";
     }

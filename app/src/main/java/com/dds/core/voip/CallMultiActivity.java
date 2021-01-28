@@ -27,7 +27,7 @@ import java.util.UUID;
 
 /**
  * Created by dds on 2018/7/26.
- * 多人通话界面
+ * Multi-person call interface
  */
 public class CallMultiActivity extends BaseActivity implements CallSession.CallSessionCallback, View.OnClickListener {
     private SkyEngineKit gEngineKit;
@@ -86,10 +86,10 @@ public class CallMultiActivity extends BaseActivity implements CallSession.CallS
         String[] per = new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.CAMERA};
         Permissions.request(this, per, integer -> {
             if (integer == 0) {
-                // 权限同意
+                // Permission consent
                 init(room, isOutgoing);
             } else {
-                // 权限拒绝
+                // Permission denied
                 CallMultiActivity.this.finish();
             }
         });
@@ -100,11 +100,11 @@ public class CallMultiActivity extends BaseActivity implements CallSession.CallS
     private void init(String room, boolean isOutgoing) {
         SkyEngineKit.init(new VoipEvent());
         if (isOutgoing) {
-            // 创建一个房间并进入
+            // Create a room and enter
             gEngineKit.createAndJoinRoom(this,
                     "room-" + UUID.randomUUID().toString().substring(0, 16));
         } else {
-            // 加入房间
+            // Join room
             gEngineKit.joinRoom(this, room);
         }
 
@@ -136,7 +136,7 @@ public class CallMultiActivity extends BaseActivity implements CallSession.CallS
     }
 
 
-    //-------------------------------------------------回调相关------------------------------------
+    //-------------------------------------------------Callback related------------------------------------
     @Override
     public void didCallEndWithReason(EnumType.CallEndReason var1) {
         finish();
@@ -182,7 +182,7 @@ public class CallMultiActivity extends BaseActivity implements CallSession.CallS
 
     }
 
-    // 处理挂断事件
+    // Handling hangup events
     private void handleHangup() {
         SkyEngineKit.Instance().leaveRoom();
         this.finish();

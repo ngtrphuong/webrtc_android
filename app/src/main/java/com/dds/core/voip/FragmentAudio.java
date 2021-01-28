@@ -29,14 +29,14 @@ import com.dds.webrtc.R;
 /**
  * Created by dds on 2018/7/26.
  * android_shuai@163.com
- * 语音通话控制界面
+ * Voice call control interface
  */
 public class FragmentAudio extends Fragment implements CallSession.CallSessionCallback, View.OnClickListener {
     private ImageView minimizeImageView;
-    private ImageView portraitImageView;  // 用户头像
-    private TextView nameTextView;        // 用户昵称
-    private TextView descTextView;        // 状态提示用语
-    private Chronometer durationTextView;    // 通话时长
+    private ImageView portraitImageView;  // profile picture
+    private TextView nameTextView;        // User's Nickname
+    private TextView descTextView;        // Status prompt
+    private Chronometer durationTextView;    // Call duration
 
     private ImageView muteImageView;
     private ImageView outgoingHangupImageView;
@@ -52,8 +52,8 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
     private View incomingActionContainer;
 
 
-    private boolean micEnabled = false;  // 静音
-    private boolean isSpeakerOn = false;// 扬声器
+    private boolean micEnabled = false;  // Mute
+    private boolean isSpeakerOn = false;// speaker
     private CallSingleActivity activity;
 
     @Override
@@ -117,14 +117,14 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
 
     private void init() {
         CallSession currentSession = gEngineKit.getCurrentSession();
-        // 如果已经接通
+        // If already connected
         if (currentSession != null && currentSession.getState() == EnumType.CallState.Connected) {
-            descTextView.setVisibility(View.GONE); // 提示语
+            descTextView.setVisibility(View.GONE); // Hint
             outgoingActionContainer.setVisibility(View.VISIBLE);
             durationTextView.setVisibility(View.VISIBLE);
             startRefreshTime();
         } else {
-            // 如果未接通
+            // If not connected
             if (activity.isOutgoing()) {
                 descTextView.setText(R.string.av_waiting);
                 outgoingActionContainer.setVisibility(View.VISIBLE);
@@ -144,33 +144,33 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
         activity = null;
     }
 
-    // ======================================界面回调================================
+    // ======================================Interface callback================================
     @Override
     public void didCallEndWithReason(EnumType.CallEndReason callEndReason) {
         switch (callEndReason) {
             case Busy:
-                tvStatus.setText("对方忙线中");
+                tvStatus.setText(R.string.busy_party);
                 break;
             case SignalError:
-                tvStatus.setText("信号差");
+                tvStatus.setText(R.string.signaling_error);
                 break;
             case Hangup:
-                tvStatus.setText("挂断");
+                tvStatus.setText(R.string.hang_up);
                 break;
             case MediaError:
-                tvStatus.setText("媒体错误");
+                tvStatus.setText(R.string.media_error);
                 break;
             case RemoteHangup:
-                tvStatus.setText("对方挂断");
+                tvStatus.setText(R.string.remote_hangup);
                 break;
             case OpenCameraFailure:
-                tvStatus.setText("打开摄像头错误");
+                tvStatus.setText(R.string.error_open_camera);
                 break;
             case Timeout:
-                tvStatus.setText("超时");
+                tvStatus.setText(R.string.timeout);
                 break;
             case AcceptByOtherClient:
-                tvStatus.setText("在其它设备接听");
+                tvStatus.setText(R.string.accept_by_other_client);
                 break;
         }
         incomingActionContainer.setVisibility(View.GONE);
@@ -241,7 +241,7 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        // 接听
+        // Answer
         if (id == R.id.acceptImageView) {
             CallSession session = gEngineKit.getCurrentSession();
             if (session != null && session.getState() == EnumType.CallState.Incoming) {
@@ -250,7 +250,7 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
                 activity.finish();
             }
         }
-        // 挂断电话
+        // hang up the phone
         if (id == R.id.incomingHangupImageView || id == R.id.outgoingHangupImageView) {
             CallSession session = gEngineKit.getCurrentSession();
             if (session != null) {
@@ -260,7 +260,7 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
                 activity.finish();
             }
         }
-        // 静音
+        // Mute
         if (id == R.id.muteImageView) {
             CallSession session = gEngineKit.getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {
@@ -270,7 +270,7 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
                 muteImageView.setSelected(micEnabled);
             }
         }
-        // 扬声器
+        // speaker
         if (id == R.id.speakerImageView) {
             CallSession session = gEngineKit.getCurrentSession();
             if (session != null && session.getState() != EnumType.CallState.Idle) {
@@ -281,7 +281,7 @@ public class FragmentAudio extends Fragment implements CallSession.CallSessionCa
             }
 
         }
-        // 小窗
+        // Small window
         if (id == R.id.minimizeImageView) {
             activity.showFloatingView();
         }

@@ -10,7 +10,7 @@ import com.dds.core.util.ActivityStackManager;
 public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // 添加Activity到堆栈
+        // Add Activity to the stack
         ActivityStackManager.getInstance().onCreated(this);
         super.onCreate(savedInstanceState);
     }

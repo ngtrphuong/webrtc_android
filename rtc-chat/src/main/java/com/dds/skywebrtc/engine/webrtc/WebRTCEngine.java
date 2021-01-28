@@ -67,9 +67,9 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
     private static final int VIDEO_RESOLUTION_HEIGHT = 480;
     private static final int FPS = 20;
 
-    // 对话实例列表
+    // List of dialog instances
     private ConcurrentHashMap<String, Peer> peers = new ConcurrentHashMap<>();
-    // 服务器实例列表
+    // Server instance list
     private List<PeerConnection.IceServer> iceServers = new ArrayList<>();
 
     private EngineCallback mCallback;
@@ -82,12 +82,12 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
         this.mIsAudioOnly = mIsAudioOnly;
         this.mContext = mContext;
         audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
-        // 初始化ice地址
+        // Initialize the ICE address
         initIceServer();
     }
 
 
-    // -----------------------------------对外方法------------------------------------------
+    // -----------------------------------External method------------------------------------------
     @Override
     public void init(EngineCallback callback) {
         mCallback = callback;
@@ -112,7 +112,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
             peer.setOffer(false);
             // add localStream
             peer.addLocalStream(_localStream);
-            // 添加列表
+            // Add list
             peers.put(id, peer);
         }
         if (mCallback != null) {
@@ -129,7 +129,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
         peer.setOffer(true);
         // add localStream
         peer.addLocalStream(_localStream);
-        // 添加列表
+        // Add list
         peers.put(userId, peer);
         // createOffer
         peer.createOffer();
@@ -137,7 +137,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
 
     @Override
     public void userReject(String userId, int type) {
-        //拒绝接听userId应该是没有添加进peers里去不需要remove
+        //Refusing to answer, the userId should not be added to peers without removing
 //       Peer peer = peers.get(userId);
 //        if (peer != null) {
 //            peer.close();
@@ -236,7 +236,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
             audioSource.dispose();
             audioSource = null;
         }
-        // 释放摄像头
+        // Release camera
         if (captureAndroid != null) {
             try {
                 captureAndroid.stopCapture();
@@ -246,7 +246,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
             captureAndroid.dispose();
             captureAndroid = null;
         }
-        // 释放画布
+        // Release canvas
         if (surfaceTextureHelper != null) {
             surfaceTextureHelper.dispose();
             surfaceTextureHelper = null;
@@ -299,7 +299,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
 
     }
 
-    private boolean isSwitch = false; // 是否正在切换摄像头
+    private boolean isSwitch = false; // Are you switching cameras?
 
     @Override
     public void switchCamera() {
@@ -362,7 +362,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
         if (audioManager != null) {
             audioManager.setMode(AudioManager.MODE_NORMAL);
         }
-        // 清空peer
+        // Clear peer
         if (peers != null) {
             for (Peer peer : peers.values()) {
                 peer.close();
@@ -371,7 +371,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
         }
 
 
-        // 停止预览
+        // Stop preview
         stopPreview();
 
         if (_factory != null) {
@@ -387,13 +387,16 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
 
     }
 
-    // -----------------------------其他方法--------------------------------
+    // -----------------------------Other methods--------------------------------
 
     private void initIceServer() {
-        // 初始化一些stun和turn的地址
+        // Initialize some STUN and TURN addresses
         PeerConnection.IceServer var1 = PeerConnection.IceServer.builder("stun:stun.l.google.com:19302")
                 .createIceServer();
         iceServers.add(var1);
+        //PeerConnection.IceServer var2 = PeerConnection.IceServer.builder("turn:103.199.5.10:3478?transport=tcp")
+        //        .createIceServer();
+        //iceServers.add(var2);
 
         PeerConnection.IceServer var11 = PeerConnection.IceServer.builder("stun:42.192.40.58:3478?transport=udp")
                 .createIceServer();
@@ -411,19 +414,19 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
     }
 
     /**
-     * 构造PeerConnectionFactory
+     * Construct PeerConnectionFactory
      *
      * @return PeerConnectionFactory
      */
     public PeerConnectionFactory createConnectionFactory() {
 
-        // 1. 初始化的方法，必须在开始之前调用
+        // 1. The initialization method must be called before starting
         PeerConnectionFactory.initialize(PeerConnectionFactory
                 .InitializationOptions
                 .builder(mContext)
                 .createInitializationOptions());
 
-        // 2. 设置编解码方式：默认方法
+        // 2. Set codec method: default method
         final VideoEncoderFactory encoderFactory;
         final VideoDecoderFactory decoderFactory;
 
@@ -433,7 +436,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
                 true);
         decoderFactory = new DefaultVideoDecoderFactory(mRootEglBase.getEglBaseContext());
 
-        // 构造Factory
+        // Construct Factory
         AudioDeviceModule audioDeviceModule = JavaAudioDeviceModule.builder(mContext).createAudioDeviceModule();
         PeerConnectionFactory.Options options = new PeerConnectionFactory.Options();
         return PeerConnectionFactory.builder()
@@ -445,16 +448,16 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
     }
 
     /**
-     * 创建本地流
+     * Create a local stream
      */
     public void createLocalStream() {
         _localStream = _factory.createLocalMediaStream("ARDAMS");
-        // 音频
+        // Audio
         audioSource = _factory.createAudioSource(createAudioConstraints());
         _localAudioTrack = _factory.createAudioTrack(AUDIO_TRACK_ID, audioSource);
         _localStream.addTrack(_localAudioTrack);
 
-        // 视频
+        // Video
         if (!mIsAudioOnly) {
             captureAndroid = createVideoCapture();
             surfaceTextureHelper = SurfaceTextureHelper.create("CaptureThread", mRootEglBase.getEglBaseContext());
@@ -471,11 +474,11 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
     }
 
 
-    // 是否使用录屏
+    // Whether to use screen recording
     private boolean screencaptureEnabled = false;
 
     /**
-     * 创建媒体方式
+     * Create media method
      *
      * @return VideoCapturer
      */
@@ -496,7 +499,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
     }
 
     /**
-     * 创建相机媒体流
+     * Create camera media stream
      */
     private VideoCapturer createCameraCapture(CameraEnumerator enumerator) {
         final String[] deviceNames = enumerator.getDeviceNames();
@@ -544,13 +547,13 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
         });
     }
 
-    //**************************************各种约束******************************************/
+    //**************************************Various constraints******************************************/
     private static final String AUDIO_ECHO_CANCELLATION_CONSTRAINT = "googEchoCancellation";
     private static final String AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT = "googAutoGainControl";
     private static final String AUDIO_HIGH_PASS_FILTER_CONSTRAINT = "googHighpassFilter";
     private static final String AUDIO_NOISE_SUPPRESSION_CONSTRAINT = "googNoiseSuppression";
 
-    // 配置音频参数
+    // Configure audio parameters
     private MediaConstraints createAudioConstraints() {
         MediaConstraints audioConstraints = new MediaConstraints();
         audioConstraints.mandatory.add(
@@ -564,7 +567,7 @@ public class WebRTCEngine implements IEngine, Peer.IPeerEvent {
         return audioConstraints;
     }
 
-    //------------------------------------回调---------------------------------------------
+    //------------------------------------Callback---------------------------------------------
     @Override
     public void onSendIceCandidate(String userId, IceCandidate candidate) {
         if (mCallback != null) {

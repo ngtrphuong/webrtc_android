@@ -107,9 +107,9 @@ public class UrlConnUtils {
             connection.setRequestMethod("GET");
             connection.setUseCaches(false);
             connection.setInstanceFollowRedirects(true);
-            //可设置请求头
+            //Request header can be set
             connection.setRequestProperty("Content-Type", "application/octet-stream");
-            connection.setRequestProperty("Connection", "Keep-Alive");// 维持长连接
+            connection.setRequestProperty("Connection", "Keep-Alive");// Maintain a long connection
             connection.setRequestProperty("Charset", "UTF-8");
             connection.connect();
             byte[] file = input2byte(connection.getInputStream());
@@ -124,7 +124,7 @@ public class UrlConnUtils {
     }
 
     /**
-     * 构建json参数
+     * Build JSON parameters
      */
     public static String builderJsonParams(Map<String, Object> params) {
         JSONObject jsonObject;
@@ -147,7 +147,7 @@ public class UrlConnUtils {
     }
 
     /**
-     * 构建post参数
+     * Build POST parameters
      */
     public static String builderUrlParams(Map<String, Object> params) {
         StringBuilder sb = new StringBuilder();

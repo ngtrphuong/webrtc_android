@@ -28,14 +28,14 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
         }
         final Writer result = new StringWriter();
         final PrintWriter printWriter = new PrintWriter(result);
-        //如果异常时在AsyncTask里面的后台线程抛出的
-        //那么实际的异常仍然可以通过getCause获得
+        //If the exception is thrown by the background thread in AsyncTask,
+        // the actual exception can still be obtained through getCause
         Throwable cause = ex;
         while (null != cause) {
             cause.printStackTrace(printWriter);
             cause = cause.getCause();
         }
-        //stacktraceAsString就是获取的carsh堆栈信息
+        //stacktraceAsString is the obtained crash stack information
         final String stacktraceAsString = result.toString();
         printWriter.close();
         restartApp();

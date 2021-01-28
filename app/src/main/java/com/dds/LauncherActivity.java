@@ -53,11 +53,11 @@ public class LauncherActivity extends BaseActivity implements IUserState {
             return;
         }
 
-        // 设置用户名
+        // Set username
         App.getInstance().setUsername(username);
-        // 添加登录回调
+        // Add login callback
         SocketManager.getInstance().addUserStateCallback(this);
-        // 连接socket:登录
+        // Connect socket: login
         SocketManager.getInstance().connect(Urls.WS, username, 0);
 
 

@@ -33,19 +33,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="0123456789qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM"
-            android:hint="input your user name " />
+            android:hint="@string/input_your_user_name" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="The server side is written by Spring boot" />
+            android:text="@string/the_server_side_is_written_by_spring_boot" />
 
         <Button
             android:id="@+id/button8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="java"
-            android:text="ENTER"
+            android:text="@string/enter"
             android:textAllCaps="false" />
     </LinearLayout>
 

@@ -22,7 +22,7 @@ bintray {
         vcsUrl = POM_SCM_URL
         issueTrackerUrl = POM_ISSUE_URL
         licenses = [POM_LICENSE_NAME]
-        labels = ['videoChat', 'Android', 'webrtc']    //标签
+        labels = ['videoChat', 'Android', 'webrtc']    //Label
         publicDownloadNumbers = true
     }
 

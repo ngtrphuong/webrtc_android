@@ -31,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="静音"
+                android:text="@string/mute"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="切换摄像头"
+                android:text="@string/switch_camera"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="免提"
+                android:text="@string/hands_free"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
@@ -105,7 +105,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="挂断"
+            android:text="@string/hang_up"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

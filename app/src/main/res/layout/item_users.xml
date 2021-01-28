@@ -19,7 +19,7 @@
         android:layout_centerVertical="true"
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/item_user_avatar"
-        android:text="ddssingsong"
+        android:text="@string/tma_technology_team"
         android:textColor="@android:color/black"
         android:textSize="16sp" />
 
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:text="语音" />
+        android:text="@string/voice" />
 
     <Button
         android:id="@+id/item_call_video"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toStartOf="@id/item_call_audio"
-        android:text="视频" />
+        android:text="@string/video" />
 
     <View
         android:layout_width="match_parent"

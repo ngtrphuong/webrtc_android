@@ -3,13 +3,41 @@
     <string name="action_settings">Settings</string>
     <string name="action_create_room">Create Room</string>
 
-    <!--视频通话-->
-    <string name="av_waiting">正在等待对方接受邀请.</string>
-    <string name="av_audio_invite">邀请你进行语音通话</string>
-    <string name="av_video_invite">邀请你进行视频通话</string>
+    <!--Video call-->
+    <string name="av_waiting">Waiting for the other party to accept the invitation.</string>
+    <string name="av_audio_invite">Invite you to a voice call</string>
+    <string name="av_video_invite">Invite you to a video call</string>
 
     <string name="title_user">User</string>
     <string name="title_room">Room</string>
     <string name="title_setting">Setting</string>
+    <string name="busy_party">The other party is busy</string>
+    <string name="signaling_error">Signaling Error</string>
+    <string name="media_error">Media error</string>
+    <string name="remote_hangup">Remote hang up</string>
+    <string name="error_open_camera">Error opening camera</string>
+    <string name="timeout">Time out</string>
+    <string name="accept_by_other_client">Answer on other devices</string>
+    <string name="hang_up">Hang up</string>
+    <string name="answer">Answer</string>
+    <string name="mute">Mute</string>
+    <string name="hand_free">Hand-free</string>
+    <string name="switch_camera">Switch camera</string>
+    <string name="hands_free">Hands free</string>
+    <string name="switch_to_voice_call">Switch to Voice call</string>
+    <string name="rotating_camera">Rotating Camera</string>
+    <string name="switch_to_voice_answer">Switch to Voice Answer</string>
+    <string name="switch_to_voice">Switch to Voice</string>
+    <string name="cancel">Cancel</string>
+    <string name="invite_you_to_a_voice_call">Invite you to a voice call</string>
+    <string name="no_data">no data</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="tma_technology_team">TMA Technology Team</string>
+    <string name="enter_the_room">Enter the room</string>
+    <string name="voice">Voice</string>
+    <string name="video">Video</string>
+    <string name="input_your_user_name">input your user name</string>
+    <string name="the_server_side_is_written_by_spring_boot">The server side is written by Spring boot</string>
+    <string name="enter">ENTER</string>
 
 </resources>

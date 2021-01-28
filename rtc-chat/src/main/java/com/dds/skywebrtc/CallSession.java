@@ -22,7 +22,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * 会话层
+ * Session layer
  * Created by dds on 2019/8/19.
  *
  */
@@ -31,17 +31,17 @@ public class CallSession implements EngineCallback {
     private WeakReference<CallSessionCallback> sessionCallback;
     private ExecutorService executor;
     private Handler handler = new Handler(Looper.getMainLooper());
-    // session参数
+    // session parameters
     private boolean mIsAudioOnly;
-    // 房间人列表
+    // Room list
     private List<String> mUserIDList;
-    // 单聊对方Id/群聊邀请人
+    // Single chat partner Id/group chat inviter
     public String mTargetId;
-    // 房间Id
+    // Room Id
     private String mRoomId;
     // myId
     public String mMyId;
-    // 房间大小
+    // Room size
     private int mRoomSize;
 
     private boolean mIsComing;
@@ -62,9 +62,9 @@ public class CallSession implements EngineCallback {
     }
 
 
-    // ----------------------------------------各种控制--------------------------------------------
+    // ----------------------------------------Various controls--------------------------------------------
 
-    // 创建房间
+    // Create room
     public void createHome(String room, int roomSize) {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -73,7 +73,7 @@ public class CallSession implements EngineCallback {
         });
     }
 
-    // 加入房间
+    // Join room
     public void joinHome(String roomId) {
         executor.execute(() -> {
             _callState = EnumType.CallState.Connecting;
@@ -84,14 +84,14 @@ public class CallSession implements EngineCallback {
 
     }
 
-    //开始响铃
+    //Start ringing
     public void shouldStartRing() {
         if (mEvent != null) {
             mEvent.shouldStartRing(true);
         }
     }
 
-    // 关闭响铃
+    // Turn off the ring
     public void shouldStopRing() {
         Log.d(TAG, "shouldStopRing mEvent != null is " + (mEvent != null));
         if (mEvent != null) {
@@ -99,7 +99,7 @@ public class CallSession implements EngineCallback {
         }
     }
 
-    // 发送响铃回复
+    // Send ring reply
     public void sendRingBack(String targetId, String room) {
         executor.execute(() -> {
             if (mEvent != null) {
@@ -108,33 +108,33 @@ public class CallSession implements EngineCallback {
         });
     }
 
-    // 发送拒绝信令
+    // Send rejection signal
     public void sendRefuse() {
         executor.execute(() -> {
             if (mEvent != null) {
-                // 取消拨出
+                // Cancel outgoing
                 mEvent.sendRefuse(mRoomId, mTargetId, EnumType.RefuseType.Hangup.ordinal());
             }
         });
 
     }
 
-    // 发送忙时拒绝
+    // Reject when sending is busy
     void sendBusyRefuse(String room, String targetId) {
         executor.execute(() -> {
             if (mEvent != null) {
-                // 取消拨出
+                // Cancel outgoing
                 mEvent.sendRefuse(room, targetId, EnumType.RefuseType.Busy.ordinal());
             }
         });
 
     }
 
-    // 发送取消信令
+    // Send cancel signal
     public void sendCancel() {
         executor.execute(() -> {
             if (mEvent != null) {
-                // 取消拨出
+                // Cancel outgoing
                 List<String> list = new ArrayList<>();
                 list.add(mTargetId);
                 mEvent.sendCancel(mRoomId, list);
@@ -143,65 +143,65 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 离开房间
+    // Leave the room
     public void leave() {
         executor.execute(() -> {
             if (mEvent != null) {
                 mEvent.sendLeave(mRoomId, mMyId);
             }
         });
-        // 释放变量
+        // Hangup the call
         release(EnumType.CallEndReason.Hangup);
 
     }
 
-    // 切换到语音接听
+    // Switch to voice answering
     public void sendTransAudio() {
         executor.execute(() -> {
             if (mEvent != null) {
-                // 发送到对面，切换到语音
+                // Send to the other side, switch to voice
                 mEvent.sendTransAudio(mTargetId);
             }
         });
     }
 
-    // 设置静音
+    // Set mute
     public boolean toggleMuteAudio(boolean enable) {
         return iEngine.muteAudio(enable);
     }
 
-    // 设置扬声器
+    // Set up speakers
     public boolean toggleSpeaker(boolean enable) {
 
         return iEngine.toggleSpeaker(enable);
     }
 
-    // 切换到语音通话
+    // Switch to voice call
     public void switchToAudio() {
         mIsAudioOnly = true;
-        // 告诉远端
+        // Tell remote
         sendTransAudio();
-        // 本地切换
+        // Local switch
         if (sessionCallback.get() != null) {
             sessionCallback.get().didChangeMode(true);
         }
 
     }
 
-    // 调整摄像头前置后置
+    // Adjust the camera front and rear
     public void switchCamera() {
         iEngine.switchCamera();
     }
 
-    // 释放资源
+    // Release resources
     private void release(EnumType.CallEndReason reason) {
         executor.execute(() -> {
-            // 释放内容
+            // Release the call
             iEngine.release();
-            // 状态设置为Idle
+            // Set status to Idle
             _callState = EnumType.CallState.Idle;
 
-            //界面回调
+            //Interface callback
             if (sessionCallback.get() != null) {
                 sessionCallback.get().didCallEndWithReason(reason);
             }
@@ -210,9 +210,9 @@ public class CallSession implements EngineCallback {
 
     //------------------------------------receive---------------------------------------------------
 
-    // 加入房间成功
+    // Successfully joined the room
     public void onJoinHome(String myId, String users, int roomSize) {
-        // 开始计时
+        // start the timer
         mRoomSize = roomSize;
         startTime = 0;
         handler.post(() -> executor.execute(() -> {
@@ -224,7 +224,7 @@ public class CallSession implements EngineCallback {
                 mUserIDList = strings;
             }
 
-            // 发送邀请
+            // send invitation
             if (!mIsComing) {
                 if (roomSize == 2) {
                     List<String> inviteList = new ArrayList<>();
@@ -236,7 +236,7 @@ public class CallSession implements EngineCallback {
             }
 
             if (!isAudioOnly()) {
-                // 画面预览
+                // Screen preview
                 if (sessionCallback.get() != null) {
                     sessionCallback.get().didCreateLocalVideoTrack();
                 }
@@ -249,17 +249,17 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 新成员进入
+    // New members enter
     public void newPeer(String userId) {
         handler.post(() -> executor.execute(() -> {
-            // 其他人加入房间
+            // Other people join the room
             iEngine.userIn(userId);
 
-            // 关闭响铃
+            // Turn off the ring
             if (mEvent != null) {
                 mEvent.shouldStopRing();
             }
-            // 更换界面
+            // Change interface
             _callState = EnumType.CallState.Connected;
             if (sessionCallback.get() != null) {
                 startTime = System.currentTimeMillis();
@@ -270,35 +270,35 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 对方已拒绝
+    // The other party has declined
     public void onRefuse(String userId, int type) {
         iEngine.userReject(userId, type);
     }
 
-    // 对方已响铃
+    // The other party has ringed
     public void onRingBack(String userId) {
         if (mEvent != null) {
             mEvent.shouldStartRing(false);
         }
     }
 
-    // 切换到语音
+    // Switch to voice
     public void onTransAudio(String userId) {
         mIsAudioOnly = true;
-        // 本地切换
+        // Local switch
         if (sessionCallback.get() != null) {
             sessionCallback.get().didChangeMode(true);
         }
     }
 
-    // 对方网络断开
+    // The other party's network is disconnected
     public void onDisConnect(String userId) {
         executor.execute(() -> {
             iEngine.disconnected(userId);
         });
     }
 
-    // 对方取消拨出
+    // The other party cancels the call
     public void onCancel(String userId) {
         Log.d(TAG, "onCancel userId = " + userId);
         shouldStopRing();
@@ -326,10 +326,10 @@ public class CallSession implements EngineCallback {
 
     }
 
-    // 对方离开房间
+    // The other party leaves the room
     public void onLeave(String userId) {
         if (mRoomSize > 2) {
-            // 返回到界面上
+            // Return to the interface
             if (sessionCallback.get() != null) {
                 sessionCallback.get().didUserLeave(userId);
             }
@@ -340,7 +340,7 @@ public class CallSession implements EngineCallback {
     }
 
 
-    // --------------------------------界面显示相关--------------------------------------------/
+    // --------------------------------Interface display related--------------------------------------------/
 
     public long getStartTime() {
         return startTime;
@@ -356,7 +356,7 @@ public class CallSession implements EngineCallback {
     }
 
 
-    //------------------------------------各种参数----------------------------------------------/
+    //------------------------------------Various parameters----------------------------------------------/
 
     public void setIsAudioOnly(boolean _isAudioOnly) {
         this.mIsAudioOnly = _isAudioOnly;
@@ -398,15 +398,15 @@ public class CallSession implements EngineCallback {
         this.sessionCallback = new WeakReference<>(sessionCallback);
     }
 
-    //-----------------------------Engine回调-----------------------------------------
+    //-----------------------------Engine callback-----------------------------------------
 
     @Override
     public void joinRoomSucc() {
-        // 关闭响铃
+        // Turn off the ring
         if (mEvent != null) {
             mEvent.shouldStopRing();
         }
-        // 更换界面
+        // Change interface
         _callState = EnumType.CallState.Connected;
         if (sessionCallback.get() != null) {
             startTime = System.currentTimeMillis();
@@ -417,7 +417,7 @@ public class CallSession implements EngineCallback {
 
     @Override
     public void exitRoom() {
-        // 状态设置为Idle
+        // Set status to Idle
         if (mRoomSize == 2) {
             handler.post(() -> {
                 release(EnumType.CallEndReason.Hangup);

@@ -29,7 +29,7 @@ import org.webrtc.SurfaceViewRenderer;
 /**
  * Created by dds on 2018/7/26.
  * android_shuai@163.com
- * 视频通话控制界面
+ * Video call control interface
  */
 public class FragmentVideo extends Fragment implements CallSession.CallSessionCallback, View.OnClickListener {
     private static final String TAG = "FragmentVideo";
@@ -141,7 +141,7 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
                 pipRenderer.setLayoutParams(params2);
             });
         }
-//        if(isOutgoing){ //测试崩溃对方是否会停止
+//        if(isOutgoing){ //Test whether the crashing opponent will stop
 //            lytParent.postDelayed(() -> {
 //                int i = 1 / 0;
 //            }, 10000);
@@ -217,28 +217,28 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
     public void didCallEndWithReason(EnumType.CallEndReason var1) {
         switch (var1) {
             case Busy:
-                tvStatus.setText("对方忙线中");
+                tvStatus.setText(R.string.busy_party);
                 break;
             case SignalError:
-                tvStatus.setText("信号差");
+                tvStatus.setText(R.string.signaling_error);
                 break;
             case Hangup:
-                tvStatus.setText("挂断");
+                tvStatus.setText(R.string.hang_up);
                 break;
             case MediaError:
-                tvStatus.setText("媒体错误");
+                tvStatus.setText(R.string.media_error);
                 break;
             case RemoteHangup:
-                tvStatus.setText("对方挂断");
+                tvStatus.setText(R.string.remote_hangup);
                 break;
             case OpenCameraFailure:
-                tvStatus.setText("打开摄像头错误");
+                tvStatus.setText(R.string.error_open_camera);
                 break;
             case Timeout:
-                tvStatus.setText("超时");
+                tvStatus.setText(R.string.timeout);
                 break;
             case AcceptByOtherClient:
-                tvStatus.setText("在其它设备接听");
+                tvStatus.setText(R.string.accept_by_other_client);
                 break;
         }
         incomingActionContainer.setVisibility(View.GONE);
@@ -263,7 +263,7 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
                 inviteeInfoContainer.setVisibility(View.GONE);
                 descTextView.setVisibility(View.GONE);
                 minimizeImageView.setVisibility(View.VISIBLE);
-                // 开启计时器
+                // Start timer
                 startRefreshTime();
             } else {
                 // do nothing now
@@ -364,7 +364,7 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        // 接听
+        // Answer
         CallSession session = gEngineKit.getCurrentSession();
         if (id == R.id.acceptImageView) {
             if (session != null && session.getState() == EnumType.CallState.Incoming) {
@@ -373,7 +373,7 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
                 activity.finish();
             }
         }
-        // 挂断电话
+        // Hang up the phone
         if (id == R.id.incomingHangupImageView || id == R.id.outgoingHangupImageView ||
                 id == R.id.connectedHangupImageView) {
             if (session != null) {
@@ -384,7 +384,7 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
             }
         }
 
-        // 切换摄像头
+        // Switch camera
         if (id == R.id.switchCameraImageView) {
             if (session != null) {
                 session.switchCamera();
@@ -409,7 +409,7 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
             }
         }
 
-        // 切换到语音拨打
+        // Switch to voice dialing
         if (id == R.id.outgoingAudioOnlyImageView || id == R.id.incomingAudioOnlyImageView ||
                 id == R.id.connectedAudioOnlyImageView) {
             if (session != null) {
@@ -420,7 +420,7 @@ public class FragmentVideo extends Fragment implements CallSession.CallSessionCa
 
         }
 
-        // 小窗
+        // Small window
         if (id == R.id.minimizeImageView) {
             activity.showFloatingView();
         }

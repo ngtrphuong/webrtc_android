@@ -61,14 +61,14 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         this.isOffer = isOffer;
     }
 
-    // 创建offer
+    // Create offer
     public void createOffer() {
         if (pc == null) return;
         Log.d("dds_test", "createOffer");
         pc.createOffer(this, offerOrAnswerConstraint());
     }
 
-    // 创建answer
+    // Create answer
     public void createAnswer() {
         if (pc == null) return;
         Log.d("dds_test", "createAnswer");
@@ -76,28 +76,28 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
 
     }
 
-    // 设置LocalDescription
+    // Set LocalDescription
     public void setLocalDescription(SessionDescription sdp) {
         Log.d("dds_test", "setLocalDescription");
         if (pc == null) return;
         pc.setLocalDescription(this, sdp);
     }
 
-    // 设置RemoteDescription
+    // Set RemoteDescription
     public void setRemoteDescription(SessionDescription sdp) {
         if (pc == null) return;
         Log.d("dds_test", "setRemoteDescription");
         pc.setRemoteDescription(this, sdp);
     }
 
-    //添加本地流
+    //Add local stream
     public void addLocalStream(MediaStream stream) {
         if (pc == null) return;
         Log.d("dds_test", "addLocalStream" + mUserId);
         pc.addStream(stream);
     }
 
-    // 添加RemoteIceCandidate
+    // Add Remote ICE Candidate
     public void addRemoteIceCandidate(final IceCandidate candidate) {
         Log.d("dds_test", "addRemoteIceCandidate");
         if (pc != null) {
@@ -111,7 +111,7 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         }
     }
 
-    // 移除RemoteIceCandidates
+    // Remove Remote ICE Candidates
     public void removeRemoteIceCandidates(final IceCandidate[] candidates) {
         if (pc == null) {
             return;
@@ -145,7 +145,7 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
 
     }
 
-    // 关闭Peer
+    // Close Peer
     public void close() {
         if (renderer != null) {
             renderer.release();
@@ -185,7 +185,7 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
 
     @Override
     public void onIceCandidate(IceCandidate candidate) {
-        // 发送IceCandidate
+        // Send IceCandidate
         mEvent.onSendIceCandidate(mUserId, candidate);
     }
 
@@ -231,7 +231,7 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
     //-------------SdpObserver--------------------
     @Override
     public void onCreateSuccess(SessionDescription origSdp) {
-        Log.d(TAG, "sdp创建成功       " + origSdp.type);
+        Log.d(TAG, "SDP created successfully       " + origSdp.type);
         String sdpString = origSdp.description;
         final SessionDescription sdp = new SessionDescription(origSdp.type, sdpString);
         localSdp = sdp;
@@ -241,17 +241,17 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
 
     @Override
     public void onSetSuccess() {
-        Log.d(TAG, "sdp连接成功   " + pc.signalingState().toString());
+        Log.d(TAG, "SDP connection is successful   " + pc.signalingState().toString());
         if (pc == null) return;
-        // 发送者
+        // Sender
         if (isOffer) {
             if (pc.getRemoteDescription() == null) {
                 Log.d(TAG, "Local SDP set succesfully");
                 if (!isOffer) {
-                    //接收者，发送Answer
+                    //Recipient, send Answer
                     mEvent.onSendAnswer(mUserId, localSdp);
                 } else {
-                    //发送者,发送自己的offer
+                    //Sender, send your own offer
                     mEvent.onSendOffer(mUserId, localSdp);
                 }
             } else {
@@ -264,10 +264,10 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
             if (pc.getLocalDescription() != null) {
                 Log.d(TAG, "Local SDP set succesfully");
                 if (!isOffer) {
-                    //接收者，发送Answer
+                    //Recipient, send Answer
                     mEvent.onSendAnswer(mUserId, localSdp);
                 } else {
-                    //发送者,发送自己的offer
+                    //Sender, send your own offer
                     mEvent.onSendOffer(mUserId, localSdp);
                 }
 
@@ -311,7 +311,7 @@ public class Peer implements SdpObserver, PeerConnection.Observer {
         return mediaConstraints;
     }
 
-    // ----------------------------回调-----------------------------------
+    // ----------------------------Callback-----------------------------------
 
     public interface IPeerEvent {
 

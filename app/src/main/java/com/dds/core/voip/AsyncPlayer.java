@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /**
- * 响铃相关类
+ * Ring related class
  */
 public class AsyncPlayer {
     private static final int PLAY = 1;

@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import com.dds.App;
 
 public class Utils {
-    //设置界面全屏
+    //Setting interface full screen
     public static void setFullScreenWindowLayout(Window window) {
         window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.
                 SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -18,7 +18,7 @@ public class Utils {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(Color.TRANSPARENT);
         }
-        //设置页面全屏显示
+        // Full screen display of settings page
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             WindowManager.LayoutParams layoutParams = window.getAttributes();
             layoutParams.layoutInDisplayCutoutMode =

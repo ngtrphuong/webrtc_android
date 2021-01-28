@@ -31,7 +31,7 @@ public class VoipReceiver extends BroadcastReceiver {
             String userList = intent.getStringExtra("userList");
             String[] list = userList.split(",");
             SkyEngineKit.init(new VoipEvent());
-            // 权限检测
+            // Permission check
             String[] per;
             if (audioOnly) {
                 per = new String[]{Manifest.permission.RECORD_AUDIO};
@@ -42,12 +42,12 @@ public class VoipReceiver extends BroadcastReceiver {
             if (Permissions.has(activity, per)) {
                 onHasPermission(activity, room, list, inviteId, false, audioOnly);
             } else {
-                new XPopup.Builder(activity).asConfirm("来电通知", "您收到" + inviteId + "的来电邀请，请允许"
-                        + (audioOnly ? "录音" : "录音和相机") + "权限来通话", () -> {
+                new XPopup.Builder(activity).asConfirm("Call notification", "You receive" + inviteId + "Invites from, please allow"
+                        + (audioOnly ? "Recording" : "Recording and camera") + "Permission to call", () -> {
                     Permissions.request(activity, per, integer -> {
                         Log.d(TAG, "Permissions.request integer = " + integer);
                         if (integer == 0) {
-                            // 权限同意
+                            // Permission consent
                             onHasPermission(activity, room, list, inviteId, false, audioOnly);
                         } else {
                             onPermissionDenied(room, inviteId);
@@ -73,14 +73,14 @@ public class VoipReceiver extends BroadcastReceiver {
             if (list.length == 1) {
                 CallSingleActivity.openActivity(context, inviteId, isOutgoing, audioOnly);
             } else {
-                // 群聊
+                // Group chat
             }
         }
     }
 
-    // 权限拒绝
+    // Permission denied
     private void onPermissionDenied(String room, String inviteId) {
-        SkyEngineKit.Instance().sendRefuseOnPermissionDenied(room, inviteId);//通知对方结束
-        Toast.makeText(App.getInstance(), "权限被拒绝，无法通话", Toast.LENGTH_SHORT).show();
+        SkyEngineKit.Instance().sendRefuseOnPermissionDenied(room, inviteId);//Notify the other party of the end
+        Toast.makeText(App.getInstance(), "Permission denied, unable to call", Toast.LENGTH_SHORT).show();
     }
 }

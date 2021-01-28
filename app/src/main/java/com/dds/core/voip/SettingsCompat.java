@@ -115,7 +115,7 @@ public class SettingsCompat {
         return false;
     }
 
-    // 可设置Android 4.3/4.4的授权状态
+    // Can set the authorization status of Android 4.3/4.4
     private static boolean setMode(Context context, int op, boolean allowed) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2 || Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             return false;
@@ -146,7 +146,7 @@ public class SettingsCompat {
         }
     }
 
-    // 小米
+    // Xiaomi
     private static boolean manageDrawOverlaysForMiui(Context context) {
         Intent intent = new Intent("miui.intent.action.APP_PERM_EDITOR");
         intent.putExtra("extra_pkgname", context.getPackageName());
@@ -168,7 +168,7 @@ public class SettingsCompat {
 
     private final static String HUAWEI_PACKAGE = "com.huawei.systemmanager";
 
-    // 华为
+    // Huawei
     private static boolean manageDrawOverlaysForEmui(Context context) {
         Intent intent = new Intent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -192,7 +192,7 @@ public class SettingsCompat {
 
     // VIVO
     private static boolean manageDrawOverlaysForVivo(Context context) {
-        // 不支持直接到达悬浮窗设置页，只能到 i管家 首页
+        // Do not support directly to the floating window setting page, only go to the homepage of i house
         Intent intent = new Intent("com.iqoo.secure");
         intent.setClassName("com.iqoo.secure", "com.iqoo.secure.MainActivity");
         // com.iqoo.secure.ui.phoneoptimize.SoftwareManagerActivity
@@ -221,7 +221,7 @@ public class SettingsCompat {
         return startSafely(context, intent);
     }
 
-    // 魅族
+    // Meizu
     private static boolean manageDrawOverlaysForFlyme(Context context) {
         Intent intent = new Intent("com.meizu.safe.security.SHOW_APPSEC");
         intent.setClassName("com.meizu.safe", "com.meizu.safe.security.AppSecActivity");
@@ -240,19 +240,19 @@ public class SettingsCompat {
         return startSafely(context, intent);
     }
 
-    // 锤子
+    // Hammer
     private static boolean manageDrawOverlaysForSmartisan(Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             return false;
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // 锤子 坚果|5.1.1|2.5.3
+            // Hammer nuts|5.1.1|2.5.3
             Intent intent = new Intent("com.smartisanos.security.action.SWITCHED_PERMISSIONS_NEW");
             intent.setClassName("com.smartisanos.security", "com.smartisanos.security.SwitchedPermissions");
-            intent.putExtra("index", 17); // 不同版本会不一样
+            intent.putExtra("index", 17); // Different versions will be different
             return startSafely(context, intent);
         } else {
-            // 锤子 坚果|4.4.4|2.1.2
+            // Hammer nuts|4.4.4|2.1.2
             Intent intent = new Intent("com.smartisanos.security.action.SWITCHED_PERMISSIONS");
             intent.setClassName("com.smartisanos.security", "com.smartisanos.security.SwitchedPermissions");
             intent.putExtra("permission", new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW});

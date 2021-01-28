@@ -93,17 +93,17 @@ public class RoomFragment extends Fragment {
     }
 
 
-    // 创建房间
+    // Create room
     private void createRoom() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("自动创建一个房间并进入房间");
-        builder.setPositiveButton("确定", (dialog, which) -> {
-            // 创建一个房间并进入
+        builder.setMessage("Automatically create a room and enter the room");
+        builder.setPositiveButton("Enter", (dialog, which) -> {
+            // Create a room and enter
             CallMultiActivity.openActivity(getActivity(),
                     "room-" + UUID.randomUUID().toString().substring(0, 16), true);
 
 
-        }).setNegativeButton("取消", (dialog, which) -> dialog.dismiss());
+        }).setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         AlertDialog dialog = builder.create();
         dialog.show();
 

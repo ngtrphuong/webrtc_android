@@ -6,7 +6,7 @@ import android.app.Application;
 import androidx.collection.ArrayMap;
 
 /**
- * 应用程序Activity管理类，用于Activity管理和应用程序退出
+ * Application Activity management class, used for Activity management and application exit
  *
  * @author gong
  */
@@ -16,7 +16,7 @@ public class ActivityStackManager {
     private final ArrayMap<String, Activity> mActivitySet = new ArrayMap<>();
 
     /**
-     * 当前 Activity 对象标记
+     * Current Activity Object Tag
      */
     private String mCurrentTag;
 
@@ -24,7 +24,7 @@ public class ActivityStackManager {
     }
 
     public static ActivityStackManager getInstance() {
-        // 加入双重校验锁
+        // Add double check lock
         if (sInstance == null) {
             synchronized (ActivityStackManager.class) {
                 if (sInstance == null) {
@@ -36,28 +36,28 @@ public class ActivityStackManager {
     }
 
     /**
-     * 获取 Application 对象
+     * Get the Application object
      */
     public Application getApplication() {
         return getTopActivity().getApplication();
     }
 
     /**
-     * 获取栈顶的 Activity
+     * Get the activity at the top of the stack
      */
     public Activity getTopActivity() {
         return mActivitySet.get(mCurrentTag);
     }
 
     /**
-     * 销毁所有的 Activity
+     * Destroy all activities
      */
     public void finishAllActivities() {
         finishAllActivities((Class<? extends Activity>) null);
     }
 
     /**
-     * 销毁所有的 Activity，除这些 Class 之外的 Activity
+     * Destroy all activities, except those Class activities
      */
     @SafeVarargs
     public final void finishAllActivities(Class<? extends Activity>... classArray) {
@@ -73,7 +73,7 @@ public class ActivityStackManager {
                         }
                     }
                 }
-                // 如果不是白名单上面的 Activity 就销毁掉
+                // If Activity is not on the whitelist, destroy it
                 if (!whiteClazz) {
                     activity.finish();
                     mActivitySet.remove(key);
@@ -83,7 +83,7 @@ public class ActivityStackManager {
     }
 
     /**
-     * Activity 同名方法回调
+     * Activity method callback with the same name
      */
     public void onCreated(Activity activity) {
         mCurrentTag = getObjectTag(activity);
@@ -91,13 +91,13 @@ public class ActivityStackManager {
     }
 
     /**
-     * Activity 同名方法回调
+     * Activity method callback with the same name
      */
     public void onDestroyed(Activity activity) {
         mActivitySet.remove(getObjectTag(activity));
-        // 如果当前的 Activity 是最后一个的话
+        // If the current Activity is the last one
         if (getObjectTag(activity).equals(mCurrentTag)) {
-            // 清除当前标记
+            // Clear current mark
             mCurrentTag = null;
         }
         if (mActivitySet.size() != 0) {
@@ -106,10 +106,10 @@ public class ActivityStackManager {
     }
 
     /**
-     * 获取一个对象的独立无二的标记
+     * Get the unique mark of an object
      */
     private static String getObjectTag(Object object) {
-        // 对象所在的包名 + 对象的内存地址
+        // The package name of the object + the memory address of the object
         return object.getClass().getName() + Integer.toHexString(object.hashCode());
     }
 

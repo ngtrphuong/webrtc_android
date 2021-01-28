@@ -33,7 +33,7 @@ import java.util.UUID;
 
 /**
  * Created by dds on 2018/7/26.
- * 单人通话界面
+ * Single call interface
  */
 public class CallSingleActivity extends BaseActivity implements CallSession.CallSessionCallback {
 
@@ -92,7 +92,7 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
             stopService(serviceIntent);
             init(targetId, false, isAudioOnly, false);
         } else {
-            // 权限检测
+            // Permission check
             String[] per;
             if (isAudioOnly) {
                 per = new String[]{Manifest.permission.RECORD_AUDIO};
@@ -102,11 +102,11 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
             Permissions.request(this, per, integer -> {
                 Log.d(TAG, "Permissions.request integer = " + integer);
                 if (integer == 0) {
-                    // 权限同意
+                    // Permission consent
                     init(targetId, isOutgoing, isAudioOnly, false);
                 } else {
-                    Toast.makeText(this, "权限被拒绝", Toast.LENGTH_SHORT).show();
-                    // 权限拒绝
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                    // Permission denied
                     CallSingleActivity.this.finish();
                 }
             });
@@ -117,7 +117,8 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
 
     @Override
     public void onBackPressed() {
-        //通话时不能按返回键，跟微信同现象，只能挂断结束或者接听
+        //You can’t press the return key during a call,
+        // it’s the same phenomenon as WeChat, you can only hang up or answer
 //        super.onBackPressed();
 //        if (currentFragment != null) {
 //            if (currentFragment instanceof FragmentAudio) {
@@ -148,7 +149,7 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
                     .commit();
         }
         if (outgoing) {
-            // 创建会话
+            // Create session
             room = UUID.randomUUID().toString() + System.currentTimeMillis();
             boolean b = gEngineKit.startOutCall(getApplicationContext(), room, targetId, audioOnly);
             if (!b) {
@@ -187,7 +188,7 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
         return isFromFloatingView;
     }
 
-    // 显示小窗
+    // Show small window
     public void showFloatingView() {
         if (!checkOverlayPermission()) {
             return;
@@ -200,7 +201,7 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
         finish();
     }
 
-    // 切换到语音通话
+    // Switch to voice call
     public void switchAudio() {
         init(targetId, isOutgoing, true, true);
     }
@@ -209,10 +210,10 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
         return room;
     }
 
-    // ======================================界面回调================================
+    // ======================================Interface callback================================
     @Override
     public void didCallEndWithReason(EnumType.CallEndReason reason) {
-        //交给fragment去finish
+        //Hand it over to fragment to finish
 //        finish();
         handler.post(() -> currentFragment.didCallEndWithReason(reason));
     }
@@ -257,7 +258,7 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             SettingsCompat.setDrawOverlays(this, true);
             if (!SettingsCompat.canDrawOverlays(this)) {
-                Toast.makeText(this, "需要悬浮窗权限", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Need permission for floating window", Toast.LENGTH_LONG).show();
                 SettingsCompat.manageDrawOverlays(this);
                 return false;
             }
@@ -277,12 +278,12 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
     }
 
     /**
-     * 设置状态栏透明
+     * Set the status bar to be transparent
      */
     @TargetApi(19)
     public void setStatusBarOrScreenStatus(Activity activity) {
         Window window = activity.getWindow();
-        //全屏+锁屏+常亮显示
+        //Full screen + lock screen + always bright display
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN |
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON |
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |
@@ -294,13 +295,13 @@ public class CallSingleActivity extends BaseActivity implements CallSession.Call
                     WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             window.setAttributes(layoutParams);
         }
-        // 5.0以上系统状态栏透明
+        // Above 5.0 system status bar is transparent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //清除透明状态栏
+            //Clear the transparent status bar
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            //设置状态栏颜色必须添加
+            //Set the status bar color must be added
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(Color.TRANSPARENT);//设置透明
+            window.setStatusBarColor(Color.TRANSPARENT);//Set transparency
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //19
             window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }

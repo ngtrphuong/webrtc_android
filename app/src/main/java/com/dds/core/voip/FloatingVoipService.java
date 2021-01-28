@@ -36,7 +36,7 @@ import java.util.Locale;
 /**
  * Created by dds on 2018/7/26.
  * android_shuai@163.com
- * 悬浮窗界面
+ * Floating window interface
  */
 public class FloatingVoipService extends Service {
     private static boolean isStarted = false;
@@ -90,7 +90,7 @@ public class FloatingVoipService extends Service {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, channelId);
 
         builder.setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("通话中...")
+                .setContentTitle("Calling...")
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
                 .build();
@@ -206,7 +206,7 @@ public class FloatingVoipService extends Service {
                 lastX = x;
                 lastY = y;
             } else if (action == MotionEvent.ACTION_MOVE) {
-                // 减小偏移量,防止过度抖动
+                // Reduce the offset to prevent excessive jitter
                 params.x += (int) (x - lastX) / 3;
                 params.y += (int) (y - lastY) / 3;
                 tag = 1;

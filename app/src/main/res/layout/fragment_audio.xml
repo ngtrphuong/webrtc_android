@@ -40,11 +40,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="邀请你进行语音通话"
+            android:text="@string/invite_you_to_a_voice_call"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <!--拨出按钮显示-->
+    <!--Dial out button display-->
     <include
         android:id="@+id/outgoingActionContainer"
         layout="@layout/av_p2p_audio_outgoing"
@@ -53,7 +53,7 @@
         android:layout_alignParentBottom="true"
         android:visibility="visible" />
 
-    <!--接听按钮显示-->
+    <!--Answer button display-->
     <include
         android:id="@+id/incomingActionContainer"
         layout="@layout/av_p2p_audio_incoming"

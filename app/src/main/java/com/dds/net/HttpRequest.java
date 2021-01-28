@@ -10,7 +10,7 @@ import java.util.Map;
 public interface HttpRequest {
 
     /**
-     * get请求
+     * GET request
      *
      * @param url      url
      * @param params   params
@@ -19,7 +19,7 @@ public interface HttpRequest {
     void get(String url, Map<String, Object> params, ICallback callback);
 
     /**
-     * post请求
+     * POST request
      *
      * @param url      url
      * @param params   params
@@ -28,7 +28,7 @@ public interface HttpRequest {
     void post(String url, Map<String, Object> params, ICallback callback);
 
     /**
-     * 设置双向证书
+     * Set up a two-way certificate
      *
      * @param certificate certificate
      * @param pwd         pwd

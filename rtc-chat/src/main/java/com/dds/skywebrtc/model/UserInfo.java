@@ -2,7 +2,7 @@ package com.dds.skywebrtc.model;
 
 /**
  * Created by dds on 2020/4/11.
- * 用户信息
+ * User Info
  */
 public class UserInfo {
 

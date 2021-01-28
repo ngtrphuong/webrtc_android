@@ -5,23 +5,23 @@ import org.webrtc.SessionDescription;
 
 /**
  * Created by dds on 2020/4/12.
- * 框架回调
+ * Frame callback
  */
 public interface EngineCallback {
 
 
     /**
-     * 加入房间成功
+     * Successfully joined the room
      */
     void joinRoomSucc();
 
     /**
-     * 退出房间成功
+     * Exit the room successfully
      */
     void exitRoom();
 
     /**
-     * 拒绝连接
+     * Connection refused
      * @param type type
      */
     void reject(int type);

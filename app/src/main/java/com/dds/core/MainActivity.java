@@ -17,7 +17,7 @@ import com.dds.webrtc.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 /**
- * 主界面
+ * Main interface
  */
 public class MainActivity extends BaseActivity implements IUserState {
 
@@ -30,11 +30,11 @@ public class MainActivity extends BaseActivity implements IUserState {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_user, R.id.navigation_room, R.id.navigation_setting)
                 .build();
-        // 設置ActionBar跟随联动
+        // Set ActionBar to follow linkage
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        // 设置Nav跟随联动
+        // Set Nav follow linkage
         NavigationUI.setupWithNavController(navView, navController);
-        // 设置登录状态回调
+        // Set login status callback
         SocketManager.getInstance().addUserStateCallback(this);
 
     }

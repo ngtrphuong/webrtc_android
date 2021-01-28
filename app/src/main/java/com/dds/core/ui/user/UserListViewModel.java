@@ -26,7 +26,7 @@ public class UserListViewModel extends ViewModel {
     }
 
 
-    // 获取远程用户列表
+    // Get the list of remote users
     public void loadUsers() {
         Thread thread = new Thread(() -> {
             String url = Urls.getUserList();
@@ -34,14 +34,14 @@ public class UserListViewModel extends ViewModel {
                     .get(url, null, new ICallback() {
                         @Override
                         public void onSuccess(String result) {
-                            Log.d("dds_test", result);
+                            Log.d("loadUsers - onSuccess()", result);
                             List<UserBean> userBeans = JSON.parseArray(result, UserBean.class);
                             mList.postValue(userBeans);
                         }
 
                         @Override
                         public void onFailure(int code, Throwable t) {
-                            Log.d("dds_test", "code:" + code + ",msg:" + t.toString());
+                            Log.d("loadUsers - onFailure()", "code:" + code + ",msg:" + t.toString());
                         }
                     });
         });
