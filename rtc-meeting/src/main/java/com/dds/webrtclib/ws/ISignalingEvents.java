@@ -11,16 +11,16 @@ import java.util.List;
  */
 public interface ISignalingEvents {
 
-    // webSocket连接成功
+    // WebSocket connection is successful
     void onWebSocketOpen();
 
-    // webSocket连接失败
+    // webSocket connection failed
     void onWebSocketOpenFailed(String msg);
 
-    // 进入房间
+    // Enter the room
     void onJoinToRoom(ArrayList<String> connections, String myId);
 
-    // 有新人进入房间
+    // A new user enters the room
     void onRemoteJoinToRoom(String socketId);
 
     void onRemoteIceCandidate(String socketId, IceCandidate iceCandidate);

@@ -37,8 +37,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 群聊界面
- * 支持 9 路同時通信
+ * Group chat interface
+ * Support 9 simultaneous communications
  */
 public class ChatRoomActivity extends AppCompatActivity implements IViewCallback {
 
@@ -84,7 +84,7 @@ public class ChatRoomActivity extends AppCompatActivity implements IViewCallback
     }
 
     private void initVar() {
-        // 设置宽高比例
+        // Set aspect ratio
         WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
         if (manager != null) {
             mScreenWidth = manager.getDefaultDisplay().getWidth();
@@ -274,7 +274,7 @@ public class ChatRoomActivity extends AppCompatActivity implements IViewCallback
     }
 
 
-    @Override  // 屏蔽返回键
+    @Override  // Shield back button
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return keyCode == KeyEvent.KEYCODE_BACK || super.onKeyDown(keyCode, event);
     }
@@ -293,28 +293,28 @@ public class ChatRoomActivity extends AppCompatActivity implements IViewCallback
 
     }
 
-    // 切换摄像头
+    // Switch camera
     public void switchCamera() {
         manager.switchCamera();
     }
 
-    // 挂断
+    // Hang up
     public void hangUp() {
         exit();
         this.finish();
     }
 
-    // 静音
+    // Mute
     public void toggleMic(boolean enable) {
         manager.toggleMute(enable);
     }
 
-    // 免提
+    // Hand-free
     public void toggleSpeaker(boolean enable) {
         manager.toggleSpeaker(enable);
     }
 
-    // 打开关闭摄像头
+    // Turn on and off the camera
     public void toggleCamera(boolean enableCamera) {
         if (_localVideoTrack != null) {
             _localVideoTrack.setEnabled(enableCamera);

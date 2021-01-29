@@ -23,20 +23,20 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/holo_green_light"
                 android:gravity="center"
-                android:text="服务器使用nodejs" />
+                android:text="@string/the_server_uses_nodejs" />
 
             <EditText
                 android:id="@+id/et_signal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="server地址(如ws://192.168.1.123:3000)" />
+                android:hint="@string/server_address" />
 
 
             <EditText
                 android:id="@+id/et_room"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="房间号(123456)" />
+                android:hint="@string/room_number" />
 
             <Button
                 android:id="@+id/button"
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:onClick="JoinRoom"
-                android:text="加入房间"
+                android:text="@string/join_room"
                 tools:ignore="OnClick" />
 
             <Button
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:onClick="JoinRoomSingleVideo"
-                android:text="一对一视频聊天"
+                android:text="@string/one_to_one_video_chat"
                 tools:ignore="OnClick" />
 
         </LinearLayout>

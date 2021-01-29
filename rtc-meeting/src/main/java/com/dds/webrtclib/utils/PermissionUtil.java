@@ -17,7 +17,7 @@ import java.util.List;
 public class PermissionUtil {
 
 
-    // 檢查是否有權限
+    // Check if there is permission
     public static boolean isNeedRequestPermission(Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return false;

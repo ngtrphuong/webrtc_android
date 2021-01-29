@@ -1,7 +1,7 @@
 package com.dds.webrtclib.bean;
 
 /**
- * 用户信息
+ * User Info
  * Created by dds on 2019/5/3.
  * android_shuai@163.com
  */

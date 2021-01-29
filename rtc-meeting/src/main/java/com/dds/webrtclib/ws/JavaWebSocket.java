@@ -41,7 +41,7 @@ public class JavaWebSocket implements IWebSocket {
 
     private ISignalingEvents events;
 
-    private boolean isOpen; //是否连接成功过
+    private boolean isOpen; //Whether the connection was successful
 
     public JavaWebSocket(ISignalingEvents events) {
         this.events = events;
@@ -128,7 +128,7 @@ public class JavaWebSocket implements IWebSocket {
     }
 
 
-    //============================需要发送的=====================================
+    //============================Need to send =====================================
     @Override
     public void joinRoom(String room) {
         Map<String, Object> map = new HashMap<>();
@@ -193,10 +193,10 @@ public class JavaWebSocket implements IWebSocket {
         Log.d(TAG, "send-->" + jsonString);
         mWebSocketClient.send(jsonString);
     }
-    //============================需要发送的=====================================
+    //============================Need to send=====================================
 
 
-    //============================需要接收的=====================================
+    //============================Need to receive =================================
     @Override
     public void handleMessage(String message) {
         Map map = JSON.parseObject(message, Map.class);
@@ -222,7 +222,7 @@ public class JavaWebSocket implements IWebSocket {
         }
     }
 
-    // 自己进入房间
+    // Enter the room by yourself
     private void handleJoinToRoom(Map map) {
         Map data = (Map) map.get("data");
         JSONArray arr;
@@ -236,7 +236,7 @@ public class JavaWebSocket implements IWebSocket {
 
     }
 
-    // 自己已经在房间，有人进来
+    // I'm already in the room, someone comes in
     private void handleRemoteInRoom(Map map) {
         Map data = (Map) map.get("data");
         String socketId;
@@ -247,7 +247,7 @@ public class JavaWebSocket implements IWebSocket {
 
     }
 
-    // 处理交换信息
+    // Processing exchange information
     private void handleRemoteCandidate(Map map) {
         Map data = (Map) map.get("data");
         String socketId;
@@ -264,7 +264,7 @@ public class JavaWebSocket implements IWebSocket {
 
     }
 
-    // 有人离开了房间
+    // Someone left the room
     private void handleRemoteOutRoom(Map map) {
         Map data = (Map) map.get("data");
         String socketId;
@@ -275,7 +275,7 @@ public class JavaWebSocket implements IWebSocket {
 
     }
 
-    // 处理Offer
+    // Processing Offer
     private void handleOffer(Map map) {
         Map data = (Map) map.get("data");
         Map sdpDic;
@@ -288,7 +288,7 @@ public class JavaWebSocket implements IWebSocket {
 
     }
 
-    // 处理Answer
+    // Processing Answer
     private void handleAnswer(Map map) {
         Map data = (Map) map.get("data");
         Map sdpDic;
@@ -300,10 +300,10 @@ public class JavaWebSocket implements IWebSocket {
         }
 
     }
-    //============================需要接收的=====================================
+    //============================Need to receive=====================================
 
 
-    // 忽略证书
+    // Ignore the certificate
     public static class TrustManagerTest implements X509TrustManager {
 
         @SuppressLint("TrustAllX509TrustManager")

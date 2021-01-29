@@ -5,7 +5,7 @@
     android:background="@color/wr_background"
     android:gravity="center"
     android:padding="20dp">
-    <!--静音-->
+    <!--Mute-->
     <TextView
         android:id="@+id/wr_switch_mute"
         android:layout_width="wrap_content"
@@ -17,7 +17,7 @@
         android:text="@string/webrtc_chat_mute"
         android:textColor="@android:color/white"
         android:textSize="@dimen/wr_control_text_size" />
-    <!--扬声器-->
+    <!--Speaker (Hand-free)-->
     <TextView
         android:id="@+id/wr_hand_free"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         android:text="@string/webrtc_chat_hands_free"
         android:textColor="@android:color/white"
         android:textSize="@dimen/wr_control_text_size" />
-    <!--开启关闭摄像头-->
+    <!--Turn on and off the camera-->
     <TextView
         android:id="@+id/wr_open_camera"
         android:layout_width="wrap_content"
@@ -42,7 +42,7 @@
         android:text="@string/webrtc_open_camera"
         android:textColor="@android:color/white"
         android:textSize="@dimen/wr_control_text_size" />
-    <!--切换摄像头-->
+    <!--Switch Camera-->
     <TextView
         android:id="@+id/wr_switch_camera"
         android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
         android:drawableTop="@drawable/webrtc_switch_camera"
         android:drawablePadding="5dp"
         android:gravity="center_horizontal" />
-    <!--挂断-->
+    <!--Hang up-->
     <TextView
         android:id="@+id/wr_switch_hang_up"
         android:layout_width="wrap_content"

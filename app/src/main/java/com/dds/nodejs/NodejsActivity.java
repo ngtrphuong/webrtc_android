@@ -40,7 +40,7 @@ public class NodejsActivity extends AppCompatActivity {
         et_room.setText("232343");
     }
 
-    /*-------------------------- nodejs版本服务器测试--------------------------------------------*/
+    /*-------------------------- nodejs Version Server Test--------------------------------------------*/
     public void JoinRoomSingleVideo(View view) {
         WebrtcUtil.callSingle(this,
                 et_signal.getText().toString(),

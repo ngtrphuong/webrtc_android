@@ -15,7 +15,7 @@ import com.dds.webrtclib.R;
 import com.dds.webrtclib.utils.Utils;
 
 /**
- * 单聊控制界面
+ * Single chat control interface
  * Created by dds on 2019/1/7.
  * android_shuai@163.com
  */

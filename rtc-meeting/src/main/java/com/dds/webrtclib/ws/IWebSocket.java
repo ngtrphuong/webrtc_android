@@ -15,10 +15,10 @@ public interface IWebSocket {
 
     void close();
 
-    // 加入房间
+    // Join room
     void joinRoom(String room);
 
-    //处理回调消息
+    //Process callback messages
     void handleMessage(String message);
 
     void sendIceCandidate(String socketId, IceCandidate iceCandidate);

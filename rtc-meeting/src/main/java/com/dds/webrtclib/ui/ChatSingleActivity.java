@@ -29,9 +29,9 @@ import org.webrtc.RendererCommon;
 import org.webrtc.SurfaceViewRenderer;
 
 /**
- * 单聊界面
- * 1. 一对一视频通话
- * 2. 一对一语音通话
+ * Single chat interface
+ * 1. One-to-one video call
+ * 2. One-to-one voice call
  */
 public class ChatSingleActivity extends AppCompatActivity {
     private SurfaceViewRenderer local_view;
@@ -81,13 +81,13 @@ public class ChatSingleActivity extends AppCompatActivity {
             local_view = findViewById(R.id.local_view_render);
             remote_view = findViewById(R.id.remote_view_render);
 
-            // 本地图像初始化
+            // Local image initialization
             local_view.init(rootEglBase.getEglBaseContext(), null);
             local_view.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_FIT);
             local_view.setZOrderMediaOverlay(true);
             local_view.setMirror(true);
             localRender = new ProxyVideoSink();
-            //远端图像初始化
+            //Remote image initialization
             remote_view.init(rootEglBase.getEglBaseContext(), null);
             remote_view.setScalingType(RendererCommon.ScalingType.SCALE_ASPECT_BALANCED);
             remote_view.setMirror(true);
@@ -104,7 +104,7 @@ public class ChatSingleActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     private void initListener() {
         if (videoEnable) {
-            // 设置小视频可以移动
+            // Set small video can be moved
             local_view.setOnTouchListener((view, motionEvent) -> {
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
@@ -205,23 +205,23 @@ public class ChatSingleActivity extends AppCompatActivity {
     }
 
 
-    // 切换摄像头
+    // Switch camera
     public void switchCamera() {
         manager.switchCamera();
     }
 
-    // 挂断
+    // Hang up
     public void hangUp() {
         disConnect();
         this.finish();
     }
 
-    // 静音
+    // Mute
     public void toggleMic(boolean enable) {
         manager.toggleMute(enable);
     }
 
-    // 扬声器
+    // Hand-free
     public void toggleSpeaker(boolean enable) {
         manager.toggleSpeaker(enable);
 

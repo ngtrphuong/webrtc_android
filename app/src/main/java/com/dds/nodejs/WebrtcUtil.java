@@ -23,7 +23,7 @@ public class WebrtcUtil {
     private static MyIceServer[] iceServers = {
             new MyIceServer("stun:stun.l.google.com:19302"),
 
-            // 测试地址1
+            // Test address 1
             new MyIceServer("stun:" + HOST + ":3478?transport=udp"),
             new MyIceServer("turn:" + HOST + ":3478?transport=udp",
                     "ddssingsong",
@@ -33,10 +33,10 @@ public class WebrtcUtil {
                     "123456"),
     };
 
-    // signalling
-    private static String WSS = "wss://" + HOST + "/wss";
-    //本地测试信令地址
-    // private static String WSS = "ws://192.168.1.138:3000";
+    // Public signaling address (recommend to use WSS for secure signaling
+    // private static String WSS = "wss://" + HOST + "/wss";
+    // Local test signaling address
+    private static String WSS = "ws://10.128.197.95:3000";
 
     // one to one
     public static void callSingle(Activity activity, String wss, String roomId, boolean videoEnable) {

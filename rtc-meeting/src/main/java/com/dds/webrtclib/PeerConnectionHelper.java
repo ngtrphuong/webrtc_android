@@ -117,12 +117,12 @@ public class PeerConnectionHelper {
         }
     }
 
-    // 设置界面的回调
+    // Set the callback of the interface
     public void setViewCallback(IViewCallback callback) {
         viewCallback = callback;
     }
 
-    // ===================================webSocket回调信息=======================================
+    // ===================================webSocket callback information=======================================
 
     public void initContext(Context context, EglBase eglBase) {
         _context = context;
@@ -178,7 +178,7 @@ public class PeerConnectionHelper {
     }
 
     public void onRemoteIceCandidateRemove(String socketId, List<IceCandidate> iceCandidates) {
-        // todo 移除
+        // TODO remove
         executor.execute(() -> Log.d(TAG, "send onRemoteIceCandidateRemove"));
 
     }
@@ -241,18 +241,18 @@ public class PeerConnectionHelper {
                 .createPeerConnectionFactory();
     }
 
-    // 创建本地流
+    // Create a local stream
     private void createLocalStream() {
         _localStream = _factory.createLocalMediaStream("ARDAMS");
-        // 音频
+        // Audio
         audioSource = _factory.createAudioSource(createAudioConstraints());
         _localAudioTrack = _factory.createAudioTrack(AUDIO_TRACK_ID, audioSource);
         _localStream.addTrack(_localAudioTrack);
 
         if (videoEnable) {
-            //创建需要传入设备的名称
+            // Create the name of the device that needs to be passed in
             captureAndroid = createVideoCapture();
-            // 视频
+            // Video
             surfaceTextureHelper = SurfaceTextureHelper.create("CaptureThread", _rootEglBase.getEglBaseContext());
             videoSource = _factory.createVideoSource(captureAndroid.isScreencast());
             if (_mediaType == MediaType.TYPE_MEETING) {
@@ -271,7 +271,7 @@ public class PeerConnectionHelper {
 
     }
 
-    // 创建所有连接
+    // Create all connections
     private void createPeerConnections() {
         for (Object str : _connectionIdArray) {
             Peer peer = new Peer((String) str);
@@ -279,9 +279,9 @@ public class PeerConnectionHelper {
         }
     }
 
-    // 为所有连接添加流
+    // Add flow for all connections
     private void addStreams() {
-        Log.v(TAG, "为所有连接添加流");
+        Log.v(TAG, "Add flow for all connections");
         for (Map.Entry<String, Peer> entry : _connectionPeerDic.entrySet()) {
             if (_localStream == null) {
                 createLocalStream();
@@ -295,7 +295,7 @@ public class PeerConnectionHelper {
 
     }
 
-    // 为所有连接创建offer
+    // Create offer for all connections
     private void createOffers() {
         for (Map.Entry<String, Peer> entry : _connectionPeerDic.entrySet()) {
             _role = Role.Caller;
@@ -305,7 +305,7 @@ public class PeerConnectionHelper {
 
     }
 
-    // 关闭通道流
+    // Close channel flow
     private void closePeerConnection(String connectionId) {
         Peer mPeer = _connectionPeerDic.get(connectionId);
         if (mPeer != null) {
@@ -320,8 +320,8 @@ public class PeerConnectionHelper {
     }
 
 
-    //**************************************逻辑控制**************************************
-    // 调整摄像头前置后置
+    //**************************************Logic control**************************************
+    // Adjust the camera front and rear
     public void switchCamera() {
         if (captureAndroid == null) return;
         if (captureAndroid instanceof CameraVideoCapturer) {
@@ -333,7 +333,7 @@ public class PeerConnectionHelper {
 
     }
 
-    // 设置自己静音
+    // Mute yourself
     public void toggleMute(boolean enable) {
         if (_localAudioTrack != null) {
             _localAudioTrack.setEnabled(enable);
@@ -347,7 +347,7 @@ public class PeerConnectionHelper {
 
     }
 
-    // 退出房间
+    // Exit the room
     public void exitRoom() {
         if (viewCallback != null) {
             viewCallback = null;
@@ -447,7 +447,7 @@ public class PeerConnectionHelper {
     }
 
 
-    //**************************************各种约束******************************************/
+    //**************************************Various constraints******************************************/
     private static final String AUDIO_ECHO_CANCELLATION_CONSTRAINT = "googEchoCancellation";
     private static final String AUDIO_AUTO_GAIN_CONTROL_CONSTRAINT = "googAutoGainControl";
     private static final String AUDIO_HIGH_PASS_FILTER_CONSTRAINT = "googHighpassFilter";
@@ -475,7 +475,7 @@ public class PeerConnectionHelper {
         return mediaConstraints;
     }
 
-    //**************************************内部类******************************************/
+    //**************************************Inner class ******************************************/
     private class Peer implements SdpObserver, PeerConnection.Observer {
         private PeerConnection pc;
         private String socketId;
@@ -518,7 +518,7 @@ public class PeerConnectionHelper {
 
         @Override
         public void onIceCandidate(IceCandidate iceCandidate) {
-            // 发送IceCandidate
+            // Send IceCandidate
             _webSocket.sendIceCandidate(socketId, iceCandidate);
         }
 
@@ -566,8 +566,8 @@ public class PeerConnectionHelper {
 
         @Override
         public void onCreateSuccess(SessionDescription origSdp) {
-            Log.v(TAG, "sdp创建成功       " + origSdp.type);
-            //设置本地的SDP
+            Log.v(TAG, "SDP Created Successfully       " + origSdp.type);
+            //Set up local SDP
 
             String sdpDescription = origSdp.description;
             if (videoEnable) {
@@ -582,23 +582,23 @@ public class PeerConnectionHelper {
 
         @Override
         public void onSetSuccess() {
-            Log.v(TAG, "sdp连接成功        " + pc.signalingState().toString());
+            Log.v(TAG, "SDP connection is successful        " + pc.signalingState().toString());
 
             if (pc.signalingState() == PeerConnection.SignalingState.HAVE_REMOTE_OFFER) {
                 pc.createAnswer(Peer.this, offerOrAnswerConstraint());
             } else if (pc.signalingState() == PeerConnection.SignalingState.HAVE_LOCAL_OFFER) {
-                //判断连接状态为本地发送offer
+                //Determine the connection status to send an offer locally
                 if (_role == Role.Receiver) {
-                    //接收者，发送Answer
+                    //Recipient, send Answer
                     _webSocket.sendAnswer(socketId, pc.getLocalDescription().description);
 
                 } else if (_role == Role.Caller) {
-                    //发送者,发送自己的offer
+                    //Sender, send your own offer
                     _webSocket.sendOffer(socketId, pc.getLocalDescription().description);
                 }
 
             } else if (pc.signalingState() == PeerConnection.SignalingState.STABLE) {
-                // Stable 稳定的
+                // Stable Signaling
                 if (_role == Role.Receiver) {
                     _webSocket.sendAnswer(socketId, pc.getLocalDescription().description);
 
@@ -618,12 +618,12 @@ public class PeerConnectionHelper {
         }
 
 
-        //初始化 RTCPeerConnection 连接管道
+        //Initialize the RTCPeerConnection connection pipe
         private PeerConnection createPeerConnection() {
             if (_factory == null) {
                 _factory = createConnectionFactory();
             }
-            // 管道连接抽象类实现方法
+            // Pipeline connection abstract class implementation method
             PeerConnection.RTCConfiguration rtcConfig = new PeerConnection.RTCConfiguration(ICEServers);
             return _factory.createPeerConnection(rtcConfig, this);
         }
@@ -631,7 +631,7 @@ public class PeerConnectionHelper {
     }
 
 
-    // ===================================替换编码方式优先级========================================
+    // ===================================Alternative encoding priority========================================
     private static String preferCodec(String sdpDescription, String codec, boolean isAudio) {
         final String[] lines = sdpDescription.split("\r\n");
         final int mLineIndex = findMediaDescriptionLine(isAudio, lines);
