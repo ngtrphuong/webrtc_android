@@ -457,7 +457,7 @@ public class MediaCodecVideoEncoder {
         }
 
         // Check if device is in H.264 exception list.
-        if (mime.equals(H264_MIME_TYPE)) {
+        if (H264_MIME_TYPE.equals(mime)) {
             List<String> exceptionModels = Arrays.asList(H264_HW_EXCEPTION_MODELS);
             if (exceptionModels.contains(Build.MODEL)) {
                 Logging.w(TAG, "Model: " + Build.MODEL + " has black listed H.264 encoder.");

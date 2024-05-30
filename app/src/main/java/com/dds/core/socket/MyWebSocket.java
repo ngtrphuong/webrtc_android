@@ -83,64 +83,64 @@ public class MyWebSocket extends WebSocketClient {
         String eventName = (String) map.get("eventName");
         if (eventName == null) return;
         // Login successful
-        if (eventName.equals("__login_success")) {
+        if ("__login_success".equals(eventName)) {
             handleLogin(map);
             return;
         }
         // Be invited
-        if (eventName.equals("__invite")) {
+        if ("__invite".equals(eventName)) {
             handleInvite(map);
             return;
         }
         // Cancel outgoing
-        if (eventName.equals("__cancel")) {
+        if ("__cancel".equals(eventName)) {
             handleCancel(map);
             return;
         }
         // Ring the bell
-        if (eventName.equals("__ring")) {
+        if ("__ring".equals(eventName)) {
             handleRing(map);
             return;
         }
         // Enter the room
-        if (eventName.equals("__peers")) {
+        if ("__peers".equals(eventName)) {
             handlePeers(map);
             return;
         }
         // Newcomer entering the room
-        if (eventName.equals("__new_peer")) {
+        if ("__new_peer".equals(eventName)) {
             handleNewPeer(map);
             return;
         }
         // Refuse to answer
-        if (eventName.equals("__reject")) {
+        if ("__reject".equals(eventName)) {
             handleReject(map);
             return;
         }
         // offer
-        if (eventName.equals("__offer")) {
+        if ("__offer".equals(eventName)) {
             handleOffer(map);
             return;
         }
         // answer
-        if (eventName.equals("__answer")) {
+        if ("__answer".equals(eventName)) {
             handleAnswer(map);
             return;
         }
         // ice-candidate
-        if (eventName.equals("__ice_candidate")) {
+        if ("__ice_candidate".equals(eventName)) {
             handleIceCandidate(map);
         }
         // Leave the room
-        if (eventName.equals("__leave")) {
+        if ("__leave".equals(eventName)) {
             handleLeave(map);
         }
         // Switch to voice
-        if (eventName.equals("__audio")) {
+        if ("__audio".equals(eventName)) {
             handleTransAudio(map);
         }
         // Accidentally disconnected
-        if (eventName.equals("__disconnect")) {
+        if ("__disconnect".equals(eventName)) {
             handleDisConnect(map);
         }
 
