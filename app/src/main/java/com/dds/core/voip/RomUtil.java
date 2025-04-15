@@ -3,6 +3,7 @@ package com.dds.core.voip;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import io.github.pixee.security.SystemCommand;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -131,7 +132,7 @@ public class RomUtil {
         String line = null;
         BufferedReader input = null;
         try {
-            Process p = Runtime.getRuntime().exec("getprop " + name);
+            Process p = SystemCommand.runCommand(Runtime.getRuntime(), "getprop " + name);
             input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
             line = input.readLine();
             input.close();
