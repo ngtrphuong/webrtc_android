@@ -1,5 +1,7 @@
 package com.dds.net.urlconn;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +37,7 @@ public class UrlConnUtils {
     public static String sendPost(String serverUrl, String formBody) throws Exception {
         String result;
         DataOutputStream out;
-        URL url = new URL(serverUrl);
+        URL url = Urls.create(serverUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
         HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
         if (serverUrl.startsWith("https")) {
             trustAllHosts(connection);
@@ -68,7 +70,7 @@ public class UrlConnUtils {
     public static String sendGet(String serverUrl, String param) throws Exception {
         String result;
         String reqUrl = serverUrl + (param == null ? "" : ("?" + param));
-        URL url = new URL(reqUrl);
+        URL url = Urls.create(reqUrl, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 
         // ---------------------------------https--------------------------
 //        HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
@@ -98,7 +100,7 @@ public class UrlConnUtils {
 
     public static boolean download(String u, String path) {
         try {
-            URL url = new URL(u);
+            URL url = Urls.create(u, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
             trustAllHosts(connection);
             connection.setHostnameVerifier(DO_NOT_VERIFY);
