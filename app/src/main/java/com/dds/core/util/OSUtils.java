@@ -3,6 +3,7 @@ package com.dds.core.util;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import io.github.pixee.security.BoundedLineReader;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -108,7 +109,7 @@ private static final String TAG = "Rom";
         try {
             Process p = Runtime.getRuntime().exec("getprop " + name);
             input = new BufferedReader(new InputStreamReader(p.getInputStream()), 1024);
-            line = input.readLine();
+            line = BoundedLineReader.readLine(input, 5_000_000);
             input.close();
         } catch (IOException ex) {
             Log.e(TAG, "Unable to read prop " + name, ex);
